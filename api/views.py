@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
 def apiOverview(request):
     api_urls = {
         'Task list': '/task-list/',
@@ -18,6 +17,7 @@ def apiOverview(request):
         'Create task': '/create-task/',
         'Edit task': '/update-task/<str:id>/',
         'Delete task': '/delete-task/<str:id>/',
+        'Receive authentication token': '/token-auth/'
     }
     return Response(api_urls)
 
