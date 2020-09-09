@@ -17,9 +17,28 @@ def apiOverview(request):
         'Create task': '/create-task/',
         'Edit task': '/update-task/<str:id>/',
         'Delete task': '/delete-task/<str:id>/',
+        'Register user': '/register/',
         'Receive authentication token': '/token-auth/'
     }
     return Response(api_urls)
+
+@api_view(['POST'])
+def register(request):
+    if 'username' not in request.data or 'password' not in request.data:
+        return Response(
+            {"message": "User needs to have a username and a password"},
+            status=400)
+
+    try:
+        User.objects.create_user(request.data)
+    except:
+        try:
+            User.objects.filter(username=request.data['username'])
+            return Response({"message": "User exists"}, status=409)
+        except:
+            return Response({"message": "Impossible to create user"}, status=400)
+
+    return Response("User created", status=201)
 
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))

@@ -10,4 +10,5 @@ urlpatterns = [
     path('update-task/<str:id>/', views.updateTask, name="update-task"),
     path('delete-task/<str:id>/', views.deleteTask, name="delete-task"),
     path('token-auth/', obtain_auth_token, name='api_token_auth'),
+    path('register/', views.register, name='register'),
 ]
