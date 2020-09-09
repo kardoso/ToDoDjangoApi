@@ -30,7 +30,9 @@ def register(request):
             status=400)
 
     try:
-        User.objects.create_user(request.data)
+        User.objects.create_user(
+            username=request.data['username'],
+            password=request.data['password'])
     except:
         try:
             User.objects.filter(username=request.data['username'])
